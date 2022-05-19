@@ -10,6 +10,7 @@ const dbPath = process.env.DB_PATH;
 const dbOptions = {useNewUrlParser: true};
 const port = process.env.PORT || 5000;
 
+const mainRouter = require('./Routes/moviesRoutes');
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static('./public'));
@@ -19,6 +20,7 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(methodOverride('_method'));
 
+app.use(mainRouter);
 mongoose.connect(dbPath, dbOptions)
     .then(() => console.log(`La base de données est connecté sur ${dbPath}`))
     .catch(err => console.log(err));
