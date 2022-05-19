@@ -35,9 +35,6 @@ router.get("/api/v1/movies/:moviesPerPage=20", homeController.moviesPerPage);
 // Aide : utilisez la methode .limit(MoviesPerPage).skip(MoviesPerPage*pages) pour retourner le nombreMovies du nombrePage page.
 router.get("/api/v1/movies/:pages=nombrePage", homeController.getPages);
 
-//------------------------------------------------------------------------------------------------------------------//
-//GENERAL ROUTES//
-
 //Lorsque l’utilisateur saisi par exemple le titre d’un movie, il aura les résultats.
 //Ensuite, il peut cliquer sur Get next 20, pour recevoir les 20 prochaines movies, etc.
 router.get("/movies", homeController.getMovies);
