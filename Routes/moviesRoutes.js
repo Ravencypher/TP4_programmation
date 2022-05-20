@@ -12,13 +12,14 @@ const homeController = require("../Controllers/homeComtroller");
 //------------------------------------------------------------------------------------------------------------------//
 //MOVIE ROUTES//
 
-router.get("/api/v1/movies", homeController.getAPIMovies);
+router.get("/index", homeController.getIndex);
+router.get("/", homeController.getRedirect);
+router.get("/movies", homeController.getMovies);
+router.get("/api/v1/movies/id/:id", homeController.getMovieID);
+
 
 //va faire une redirection de /api/v1/movies sur le slash
-router.get("/", homeController.redirectIndex);
-
-//va faire une redirection de /api/v1/movies sur l'index
-router.get("/index", homeController.redirectIndex);
+router.get("/api/v1/movies", homeController.getAPIMovies);
 
 // title=value qui permet de retourner les movies ayant la valeur value dans son titre.
 // Dans tous le cas la recherche commence par title. Si cette paramètre n’existe pas on cherche par rates.
@@ -43,6 +44,5 @@ router.get("/movies", homeController.getMovies);
 router.get("/api/v1/movies/ratings", homeController.getRatings);
 
 //c. /id/ :id qui permet de retourner un movie spécifique selon son id.
-router.get("/api/v1/movies/id/:id", homeController.getMovieID);
 
 module.exports = router;
