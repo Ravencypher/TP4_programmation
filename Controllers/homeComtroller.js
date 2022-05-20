@@ -24,13 +24,12 @@ exports.getMovieID = (req, res) => {
 };
 
 exports.getAPIMovies = (req, res) => {
-    console.log("-");
-
+    console.log("-")
     Movie.find({})
     
     .then(result => {
-        console.log(getAllMovies)
-        res.json(getAllMovies);
+        console.log(result)
+        res.json(result);
     })
 };
 
