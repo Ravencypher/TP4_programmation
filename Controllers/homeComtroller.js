@@ -1,6 +1,8 @@
 const Movie = require("../Models/movie");
 const Review = require("../Models/review");
 
+//------------------------------------------------------------------------------------------------------------------//
+//Regular routes
 exports.getIndex = (req, res) => {
     res.render("index");
 }
@@ -13,6 +15,8 @@ exports.getMovies = (req, res) => {
     res.render("movies");
 }
 
+//------------------------------------------------------------------------------------------------------------------//
+//Find exact movie id
 exports.getMovieID = (req, res) => {
     const searchById = {
         _id: req.params.id
@@ -23,50 +27,47 @@ exports.getMovieID = (req, res) => {
         });
 };
 
-exports.getAPIMovies = (req, res) => {
-    console.log("-")
-    Movie.find({})
-    
-    .then(result => {
-        console.log(result)
-        res.json(result);
-    })
+//------------------------------------------------------------------------------------------------------------------//
+//Find exact title
+//change the space by %20 for testing directly in the browser
+exports.getTitle = (req, res) => {
+    Movie.find({
+            title: {
+                $regex: req.params.title
+            }
+        })
+        .then(result => {
+            console.log("Title is : " + req.params.title)
+            res.json(result);
+        });
 };
+
+//------------------------------------------------------------------------------------------------------------------//
+//Find all the data available in the API
+exports.getAPIMovies = (req, res) => {
+    Movie.find({
+            data: req.data
+        })
+        .then(result => {
+            console.log("data is loading... Please be patient !")
+            res.json(result);
+        });
+};
+
+//------------------------------------------------------------------------------------------------------------------//
 
 exports.getRates = (req, res) => {
     res.json("getRates non defini encore");
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data de tous les rates ici.
-    //on va utiliser le params
-    //il manque pleins de trucs ici lol
 };
 
 exports.moviesPerPage = (req, res) => {
     res.json("moviesPerPage non defini encore");
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data du nombres de films par page ici. Defaut = 20
-    //on va utiliser le params ??
-    //il manque pleins de trucs ici lol
 };
-
-exports.getTitles = (req, res) => {
-        res.json("getTitles non defini encore");
-};
-
-
 
 exports.getPages = (req, res) => {
     res.json("getPages non defini encore");
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data du nombres de pages
-    //on va utiliser le params ??
-    //il manque pleins de trucs ici lol
 };
 
 exports.getRatings = (req, res) => {
     res.json("getPages non defini encore");
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data de tous les ratings dispo
-    //on va utiliser le params ??
-    //il manque pleins de trucs ici lol
 };
