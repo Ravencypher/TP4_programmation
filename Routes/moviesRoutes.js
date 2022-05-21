@@ -25,7 +25,7 @@ router.get("/movies", homeController.getMovies);
 //Get a specific movie ID
 router.get("/api/v1/movies/id/:id", homeController.getMovieID);
 
-//Get a specific movie title
+//Get movie title (s)
 router.get("/api/v1/movies/:title", homeController.getTitle);
 
 //------------------------------------------------------------------------------------------------------------------//

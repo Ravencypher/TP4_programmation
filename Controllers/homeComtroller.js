@@ -29,7 +29,8 @@ exports.getMovieID = (req, res) => {
 
 //------------------------------------------------------------------------------------------------------------------//
 //Find exact title
-//change the space by %20 for testing directly in the browser
+//Find all titles as well if keyword is generic.
+//change the space by %20 for testing directly in the browser if title is specific.
 exports.getTitle = (req, res) => {
     Movie.find({
             title: {
