@@ -18,6 +18,9 @@ const homeController = require("../Controllers/homeComtroller");
 //Page /Movies
 // Lorsque l’utilisateur saisi par exemple le titre d’un movie, il aura les résultats.
 // Ensuite, il peut cliquer sur Get next 20, pour recevoir les 20 prochaines movies, etc.
+
+//b. /rating qui permet de retourner les ratings des movies.
+
 //------------------------------------------------------------------------------------------------------------------//
 //MOVIE ROUTES OK//
 
@@ -40,6 +43,9 @@ router.get("/api/v1/movies/titles/:title", homeController.getTitle);
 //Get movie rating(s)
 router.get("/api/v1/movies/rated/:rated", homeController.getRated);
 
+// Get all the ratings available
+router.get("/api/v1/movies/rating", homeController.getRating);
+
 //------------------------------------------------------------------------------------------------------------------//
 //MOVIE ROUTES A FAIRE//
 
@@ -50,9 +56,6 @@ router.get("/api/v1/movies/:moviesPerPage=20", homeController.moviesPerPage);
 // pages=nombrePage qui permet de retourner le nombreMovies du nombrePage page. La valeur par defaut est 0.
 // Aide : utilisez la methode .limit(MoviesPerPage).skip(MoviesPerPage*pages) pour retourner le nombreMovies du nombrePage page.
 router.get("/api/v1/movies/:pages=nombrePage", homeController.getPages);
-
-//b. /rating qui permet de retourner les ratings des movies.
-router.get("/api/v1/movies/rating", homeController.getRating);
 
 //------------------------------------------------------------------------------------------------------------------//
 
