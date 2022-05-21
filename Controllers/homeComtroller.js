@@ -1,5 +1,5 @@
-const Movie = require("../Models/movie");
-const Review = require("../Models/review");
+const Movie = require("../Models/movies");
+const Comment = require("../Models/comments");
 
 //------------------------------------------------------------------------------------------------------------------//
 //Regular routes
@@ -38,7 +38,7 @@ exports.getTitle = (req, res) => {
             }
         })
         .then(result => {
-            console.log("Title is : " + req.params.title)
+            console.log("Search query for the title is : " + req.params.title)
             res.json(result);
         });
 };
@@ -59,18 +59,20 @@ exports.getAPIMovies = (req, res) => {
 //Find all ratings (keyword 'rated' in the API)
 exports.getRated = (req, res) => {
     Movie.find({
-        rated: {
-            $regex: req.params.rated
-        }    })
-    .then(result => {
-        console.log("Rated is : " + req.params.rated)
-        res.json(result);
-    });};
+            rated: {
+                $regex: req.params.rated
+            }
+        })
+        .then(result => {
+            console.log("Search query for the rating is : " + req.params.rated)
+            res.json(result);
+        });
+};
 
 //------------------------------------------------------------------------------------------------------------------//
 
-exports.getRatings = (req, res) => {
-    res.json("getRates non defini encore");
+exports.getRating = (req, res) => {
+    res.json("getRating (affiche donc 1x chaque rating) non defini encore");
 };
 
 exports.moviesPerPage = (req, res) => {

@@ -14,12 +14,21 @@ const homeController = require("../Controllers/homeComtroller");
 
 // title=value qui permet de retourner les movies ayant la valeur value dans son titre.
 // Dans tous le cas la recherche commence par title. Si cette paramètre n’existe pas on cherche par rates.
-// router.get("/api/v1/movies/:title", homeController.getTitle);
+
+//Page /Movies
+// Lorsque l’utilisateur saisi par exemple le titre d’un movie, il aura les résultats.
+// Ensuite, il peut cliquer sur Get next 20, pour recevoir les 20 prochaines movies, etc.
 //------------------------------------------------------------------------------------------------------------------//
 //MOVIE ROUTES OK//
 
-router.get("/index", homeController.getIndex);
+// va faire une redirection de /api/v1/movies sur le slash
+router.get("/api/v1/movies", homeController.getAPIMovies);
 router.get("/", homeController.getRedirect);
+
+// va sur une pseudo page d'accueil
+router.get("/index", homeController.getIndex);
+
+// va direct sur une page de recherche de films
 router.get("/movies", homeController.getMovies);
 
 //Get a specific movie ID
@@ -34,9 +43,6 @@ router.get("/api/v1/movies/rated/:rated", homeController.getRated);
 //------------------------------------------------------------------------------------------------------------------//
 //MOVIE ROUTES A FAIRE//
 
-// va faire une redirection de /api/v1/movies sur le slash
-router.get("/api/v1/movies", homeController.getAPIMovies);
-
 // moviesPerPage=nombreMovies qui permet de retourner seulement nombreMovies movies.
 // Si cette nombreMovies n’est pas fournie seulement 20 movies seront retourner. (j'ai mis 20)
 router.get("/api/v1/movies/:moviesPerPage=20", homeController.moviesPerPage);
@@ -45,12 +51,8 @@ router.get("/api/v1/movies/:moviesPerPage=20", homeController.moviesPerPage);
 // Aide : utilisez la methode .limit(MoviesPerPage).skip(MoviesPerPage*pages) pour retourner le nombreMovies du nombrePage page.
 router.get("/api/v1/movies/:pages=nombrePage", homeController.getPages);
 
-// Lorsque l’utilisateur saisi par exemple le titre d’un movie, il aura les résultats.
-// Ensuite, il peut cliquer sur Get next 20, pour recevoir les 20 prochaines movies, etc.
-// router.get("/movies", homeController.getMovies);
-
 //b. /rating qui permet de retourner les ratings des movies.
-router.get("/api/v1/movies/ratings", homeController.getRatings);
+router.get("/api/v1/movies/rating", homeController.getRating);
 
 //------------------------------------------------------------------------------------------------------------------//
 
