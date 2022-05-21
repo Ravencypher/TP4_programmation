@@ -70,10 +70,15 @@ exports.getRated = (req, res) => {
 };
 
 //------------------------------------------------------------------------------------------------------------------//
-
+//HARDCODED FOR NOW : getRating sends all the ratings available.
 exports.getRating = (req, res) => {
-    res.json("getRating (affiche donc 1x chaque rating) non defini encore");
+    let moviesRating = {
+        movies: ["AO", "APPROVED", "Approved", "G", "GP", "M", "NC-17", "NOT RATED", "Not Rated", "OPEN", "PASSED", "PG", "PG-13", "R", "TV-14", "TV-G", "TV-MA", "TV-PG", "TV-Y7", "UNRATED", "X"]
+    };
+    res.json(moviesRating);
 };
+
+//------------------------------------------------------------------------------------------------------------------//
 
 exports.moviesPerPage = (req, res) => {
     res.json("moviesPerPage non defini encore");
