@@ -25,17 +25,17 @@ router.get("/movies", homeController.getMovies);
 //Get a specific movie ID
 router.get("/api/v1/movies/id/:id", homeController.getMovieID);
 
-//Get movie title (s)
-router.get("/api/v1/movies/:title", homeController.getTitle);
+//Get movie title(s)
+router.get("/api/v1/movies/titles/:title", homeController.getTitle);
+
+//Get movie rating(s)
+router.get("/api/v1/movies/rated/:rated", homeController.getRated);
 
 //------------------------------------------------------------------------------------------------------------------//
 //MOVIE ROUTES A FAIRE//
 
 // va faire une redirection de /api/v1/movies sur le slash
 router.get("/api/v1/movies", homeController.getAPIMovies);
-
-// rates=value qui permet de retrouner les movies ayant les value comme rating.
-router.get("/api/v1/movies/:rates", homeController.getRates);
 
 // moviesPerPage=nombreMovies qui permet de retourner seulement nombreMovies movies.
 // Si cette nombreMovies n’est pas fournie seulement 20 movies seront retourner. (j'ai mis 20)

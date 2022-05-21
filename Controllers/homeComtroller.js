@@ -56,8 +56,20 @@ exports.getAPIMovies = (req, res) => {
 };
 
 //------------------------------------------------------------------------------------------------------------------//
+//Find all ratings (keyword 'rated' in the API)
+exports.getRated = (req, res) => {
+    Movie.find({
+        rated: {
+            $regex: req.params.rated
+        }    })
+    .then(result => {
+        console.log("Rated is : " + req.params.rated)
+        res.json(result);
+    });};
 
-exports.getRates = (req, res) => {
+//------------------------------------------------------------------------------------------------------------------//
+
+exports.getRatings = (req, res) => {
     res.json("getRates non defini encore");
 };
 
@@ -66,9 +78,5 @@ exports.moviesPerPage = (req, res) => {
 };
 
 exports.getPages = (req, res) => {
-    res.json("getPages non defini encore");
-};
-
-exports.getRatings = (req, res) => {
     res.json("getPages non defini encore");
 };
