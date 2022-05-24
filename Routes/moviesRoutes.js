@@ -51,11 +51,11 @@ router.get("/api/v1/movies/rating", homeController.getRating);
 
 // moviesPerPage=nombreMovies qui permet de retourner seulement nombreMovies movies.
 // Si cette nombreMovies n’est pas fournie seulement 20 movies seront retourner. (j'ai mis 20)
-router.get("/api/v1/movies/:moviesPerPage=20", homeController.moviesPerPage);
+// router.get("/api/v1/movies/titles/:title?limit=20", homeController.moviesPerPage);
 
 // pages=nombrePage qui permet de retourner le nombreMovies du nombrePage page. La valeur par defaut est 0.
 // Aide : utilisez la methode .limit(MoviesPerPage).skip(MoviesPerPage*pages) pour retourner le nombreMovies du nombrePage page.
-router.get("/api/v1/movies/:pages=nombrePage", homeController.getPages);
+// router.get("/api/v1/movies/:pages=nombrePage", homeController.getPages);
 
 //------------------------------------------------------------------------------------------------------------------//
 

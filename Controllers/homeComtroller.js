@@ -45,10 +45,25 @@ exports.getTitle = (req, res) => {
 
 //------------------------------------------------------------------------------------------------------------------//
 //Find all the data available in the API
+//Over 24,000 results
+
+// point 3 de la section 2 :
+// En theorie, de la maniere que je le lis pour le moment, c'est encore un .limit.
+// Si le user ne donne pas un nombre de films, alors le .limit sera de 20. Si le
+// user specifie, par exemple 5, alors le .limit sera de 5.
+
+// point 4 de la section 2 :
+// limit et skip permettent ici de limiter a 20 films a la page 0 (c'est a dire, au film 1 et suivant...)
+// Si on veut skipper vers les 20 suivants, alors nous devons mettre skip a 20. (et donc avoir film #21 et suivant...)
+
+const limit = 20;
+const skip = 20;
+
 exports.getAPIMovies = (req, res) => {
     Movie.find({
             data: req.data
         })
+        .limit(limit).skip(skip)
         .then(result => {
             console.log("data is loading... Please be patient !")
             res.json(result);
@@ -57,6 +72,7 @@ exports.getAPIMovies = (req, res) => {
 
 //------------------------------------------------------------------------------------------------------------------//
 //Find all ratings (keyword 'rated' in the API)
+
 exports.getRated = (req, res) => {
     Movie.find({
             rated: {
@@ -80,10 +96,10 @@ exports.getRating = (req, res) => {
 
 //------------------------------------------------------------------------------------------------------------------//
 
-exports.moviesPerPage = (req, res) => {
-    res.json("moviesPerPage non defini encore");
-};
+// exports.moviesPerPage = (req, res) => {
+//     res.json("moviesPerPage non defini encore");
+// };
 
-exports.getPages = (req, res) => {
-    res.json("getPages non defini encore");
-};
+// exports.getPages = (req, res) => {
+//     res.json("getPages non defini encore");
+// };
