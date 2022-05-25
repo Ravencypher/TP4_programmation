@@ -2,7 +2,7 @@ const Movie = require("../Models/movies");
 const Comment = require("../Models/comments");
 
 //------------------------------------------------------------------------------------------------------------------//
-//Regular routes
+// Regular routes
 
 exports.getIndex = (req, res) => {
     res.render("index");
@@ -25,8 +25,12 @@ exports.getMovieID = (req, res) => {
     };
     Movie.findById(searchById)
         .then(result => {
+            console.log("Search query for the movie ID is : " + req.params.id)
             res.json(result);
-        });
+        })
+        .catch(error => {
+            console.log("API isn't available. There was an error. Error is : " + error)
+        })
 };
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -42,7 +46,10 @@ exports.getTitle = (req, res) => {
         .then(result => {
             console.log("Search query for the title is : " + req.params.title)
             res.json(result);
-        });
+        })
+        .catch(error => {
+            console.log("API isn't available. There was an error. Error is : " + error)
+        })
 };
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -67,7 +74,10 @@ exports.getAPIMovies = (req, res) => {
         .then(result => {
             console.log("data is loading... Please be patient !")
             res.json(result);
-        });
+        })
+        .catch(error => {
+            console.log("API isn't available. There was an error. Error is : " + error)
+        })
 };
 
 //------------------------------------------------------------------------------------------------------------------//
@@ -82,7 +92,10 @@ exports.getRated = (req, res) => {
         .then(result => {
             console.log("Search query for the rating is : " + req.params.rated)
             res.json(result);
-        });
+        })
+        .catch(error => {
+            console.log("API isn't available. There was an error. Error is : " + error)
+        })
 };
 
 //------------------------------------------------------------------------------------------------------------------//
