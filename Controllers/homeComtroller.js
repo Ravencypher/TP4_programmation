@@ -3,6 +3,7 @@ const Comment = require("../Models/comments");
 
 //------------------------------------------------------------------------------------------------------------------//
 //Regular routes
+
 exports.getIndex = (req, res) => {
     res.render("index");
 }
@@ -17,6 +18,7 @@ exports.getMovies = (req, res) => {
 
 //------------------------------------------------------------------------------------------------------------------//
 //Find exact movie id
+
 exports.getMovieID = (req, res) => {
     const searchById = {
         _id: req.params.id
@@ -28,9 +30,9 @@ exports.getMovieID = (req, res) => {
 };
 
 //------------------------------------------------------------------------------------------------------------------//
-//Find exact title
-//Find all titles as well if keyword is generic.
-//change the space by %20 for testing directly in the browser if title is specific.
+// Find an exact title or find all titles if keyword is generic (exemple : man gets many results, while Queen%20Kelly gets one specific result).
+// ATTN: change the space by %20 for testing directly in the browser if title is specific.
+
 exports.getTitle = (req, res) => {
     Movie.find({
             title: {
@@ -44,17 +46,15 @@ exports.getTitle = (req, res) => {
 };
 
 //------------------------------------------------------------------------------------------------------------------//
-//Find all the data available in the API
-//Over 24,000 results
+//Find all the data available in the API (Over 24,000 results)
 
-// point 3 de la section 2 :
-// En theorie, de la maniere que je le lis pour le moment, c'est encore un .limit.
-// Si le user ne donne pas un nombre de films, alors le .limit sera de 20. Si le
-// user specifie, par exemple 5, alors le .limit sera de 5.
+// Point 3 de la section 2 du PDF :
+// Par ma compréhension du PDF, c'est un .limit.
+// Si le user ne donne pas un nombre de films, alors le .limit sera de 20. Si le user spécifie, par exemple 5 films, alors le .limit sera de 5.
 
-// point 4 de la section 2 :
-// limit et skip permettent ici de limiter a 20 films a la page 0 (c'est a dire, au film 1 et suivant...)
-// Si on veut skipper vers les 20 suivants, alors nous devons mettre skip a 20. (et donc avoir film #21 et suivant...)
+// Point 4 de la section 2 du PDF :
+// .limit et .skip permettent ici de limiter à 20 films à la page '0' (c'est-à-dire, au film #1 et suivant...)
+// Si nous voulons 'skipper' vers les 20 suivants, alors nous devons mettre .skip a 20. (et donc avoir le film #21 et suivant...)
 
 const limit = 20;
 const skip = 20;
@@ -71,7 +71,7 @@ exports.getAPIMovies = (req, res) => {
 };
 
 //------------------------------------------------------------------------------------------------------------------//
-//Find all ratings (keyword 'rated' in the API)
+// Find all ratings (keyword 'rated' in the API)
 
 exports.getRated = (req, res) => {
     Movie.find({
@@ -86,11 +86,14 @@ exports.getRated = (req, res) => {
 };
 
 //------------------------------------------------------------------------------------------------------------------//
-//HARDCODED FOR NOW : getRating sends all the ratings available.
+// getRating sends all the ratings available.
+
+const moviesRating = {
+    movies: ["AO", "APPROVED", "Approved", "G", "GP", "M", "NC-17", "NOT RATED", "Not Rated", "OPEN", "PASSED", "PG", "PG-13", "R", "TV-14", "TV-G", "TV-MA", "TV-PG", "TV-Y7", "UNRATED", "X"]
+};
+
 exports.getRating = (req, res) => {
-    let moviesRating = {
-        movies: ["AO", "APPROVED", "Approved", "G", "GP", "M", "NC-17", "NOT RATED", "Not Rated", "OPEN", "PASSED", "PG", "PG-13", "R", "TV-14", "TV-G", "TV-MA", "TV-PG", "TV-Y7", "UNRATED", "X"]
-    };
+    moviesRating;
     res.json(moviesRating);
 };
 
