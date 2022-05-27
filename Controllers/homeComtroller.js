@@ -94,7 +94,7 @@ exports.getTitleOrRates = (req, res) => {
                 console.log(`Amount of results is : ${result.length}`)
                 res.json(result)
             } else {
-                Movie.find({rated: req.params.title}).limit(limit)
+                Movie.find({rated: req.params.title}).limit(limit).skip(skip)
                     .then(result => {
                         console.log(`No results for the title you're looking for (${req.params.title}). Going into "rated" instead.`)
                         console.log(`Results are for the search by "rated" : ${req.params.title}`)
