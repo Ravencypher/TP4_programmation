@@ -1,84 +1,129 @@
+// .limit et .skip permettent ici de limiter à 20 films à la page '0' (c'est-à-dire, au film #1 et suivant...)
+// Si nous voulons 'skipper' vers les 20 suivants, alors nous devons mettre .skip à 20. (et donc avoir le film #21 et suivant...)
+let limit = 20;
+let skip = 0;
 
-// dans le homeController : response.json(resulat) au lieu des render
+const moviesRating = {
+    movies: ["AO", "APPROVED", "Approved", "G", "GP", "M", "NC-17", "NOT RATED", "Not Rated", "OPEN", "PASSED", "PG", "PG-13", "R", "TV-14", "TV-G", "TV-MA", "TV-PG", "TV-Y7", "UNRATED", "X"]
+};
 
-const Movie = require("../Models/movie");
-const Review = require("../Models/review");
+const Movie = require("../Models/movies");
+const Comment = require("../Models/comments");
 
 //------------------------------------------------------------------------------------------------------------------//
-//FONCTIONS A CREER//
+// Find all the data available in the API (23,000 + results)
 
-// router.get("/api/v1/movies", homeController.getAPIMovies);
-// router.get("/", homeController.redirectIndex);
-// router.get("/index", homeController.redirectIndex);
-// router.get("/api/v1/movies/:title", homeController.getTitles);
-// router.get("/api/v1/movies/:rates", homeController.getRates);
-// router.get("/api/v1/movies/:moviesPerPage=20", homeController.moviesPerPage);
-// router.get("/api/v1/movies/:pages=nombrePage", homeController.getPages);
-// router.get("/movies", homeController.getMovies);
-// router.get("/api/v1/movies/ratings", homeController.getRatings);
-// router.get("/api/v1/movies/id/:id", homeController.getMovieID);
+exports.getRedirect = (req, res) => {
+    res.redirect('/api/v1/movies');
+}
+
+exports.getAPIMovies = (req, res) => {
+    Movie.find({data: req.data})
+        .then(result => {
+            console.log(`Data is loading... Please be patient ! Currently loading ${result.length} results.`)
+            res.json(result);
+        })
+        .catch(error => {
+            console.log(`API isn't available. There was an error. Error is message is : ${error.message}`)
+        })
+};
 
 //------------------------------------------------------------------------------------------------------------------//
-
-exports.getMovies = (req, res) => {
-    res.render("movies");
-}
-
-exports.redirectIndex = (req, res) => {
-    res.redirect("/");
-}
-
-exports.getAPIMovies = ("/movies", (req, res) => {
-    response.json(resulat);
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data de tous les films ici.
-    //il manque pleins de trucs ici lol
-});
-
-exports.getTitles = (req, res) => {
-    response.json(resulat);
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data de tous les titres ici.
-    //on va utiliser le params
-    //il manque pleins de trucs ici lol
-};
-
-exports.getRates = (req, res) => {
-    response.json(resulat);
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data de tous les rates ici.
-    //on va utiliser le params
-    //il manque pleins de trucs ici lol
-};
-
-exports.moviesPerPage = (req, res) => {
-    response.json(resulat);
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data du nombres de films par page ici. Defaut = 20
-    //on va utiliser le params ??
-    //il manque pleins de trucs ici lol
-};
-
-exports.getPages = (req, res) => {
-    response.json(resulat);
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data du nombres de pages
-    //on va utiliser le params ??
-    //il manque pleins de trucs ici lol
-};
-
-exports.getRatings = (req, res) => {
-    response.json(resulat);
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data de tous les ratings dispo
-    //on va utiliser le params ??
-    //il manque pleins de trucs ici lol
-};
+//Find a movie with it's ID
 
 exports.getMovieID = (req, res) => {
-    response.json(resulat);
-    //avec le then et le catch, et on fait pas du render mais du json si on fait apparaitre du data.
-    //on va faire apparaitre le data avec l'aide d'un ID de film en particulier
-    //on va utiliser le params
-    //il manque pleins de trucs ici lol
+    const searchById = {_id: req.params.id};
+    Movie.findById(searchById)
+        .then(result => {
+            console.log(`Search query for the movie ID is : ${req.params.id}`)
+            res.json(result);
+        })
+        .catch(error => {
+            console.log(`API isn't available. There was an error. Error is message is : ${error.message}`)
+        })
 };
+
+//------------------------------------------------------------------------------------------------------------------//
+// Find an exact title or find all titles if keyword is generic (example : "man" gets many results, while "Queen%20Kelly" gets one specific result).
+// limit & skip applied.
+
+exports.getTitle = (req, res) => {
+    Movie.find({title: {$regex: req.params.title}}).limit(limit).skip(skip)
+        .then(result => {
+            console.log(`Search query for the title is : ${req.params.title}`)
+            res.json(result);
+        })
+        .catch(error => {
+            console.log(`API isn't available. There was an error. Error is message is : ${error.message}`)
+        });
+};
+
+
+//------------------------------------------------------------------------------------------------------------------//
+// Find all ratings (keyword 'rated' in the API)
+// limit & skip applied.
+
+exports.getRated = (req, res) => {
+    Movie.find({rated: {$regex: req.params.rated}}).limit(limit).skip(skip)
+        .then(result => {
+            console.log(`Search query for the rating is : ${req.params.rated}`)
+            res.json(result);
+        })
+        .catch(error => {
+            console.log(`API isn't available. There was an error. Error is message is : ${error.message}`)
+        })
+};
+
+//------------------------------------------------------------------------------------------------------------------//
+// getRating sends all the ratings available.
+
+exports.getRating = (req, res) => {
+    moviesRating;
+    res.json(moviesRating);
+};
+
+//------------------------------------------------------------------------------------------------------------------//
+// Compare the amount of objects in the title result. If length is 0, then it searches by rated instead.
+// limit & skip applied.
+
+exports.getTitleOrRates = (req, res) => {
+    Movie.find({title: {$regex: req.params.title}}).limit(limit).skip(skip)
+        .then(result => {
+            if (result.length !== 0) {
+                console.log(`Search query for the title is : ${req.params.title}`)
+                console.log(`Amount of results is : ${result.length}`)
+                res.json(result)
+            } else {
+                Movie.find({rated: req.params.title}).limit(limit).skip(skip)
+                    .then(result => {
+                        console.log(`No results for the title you're looking for (${req.params.title}). Going into "rated" instead.`)
+                        console.log(`Results are for the search by "rated" : ${req.params.title}`)
+                        res.json(result)
+                    })
+            }
+        })
+        .catch(error => {
+            console.log(`API isn't available. There was an error. Error is message is : ${error.message}`)
+        });
+}
+
+//------------------------------------------------------------------------------------------------------------------//
+// Search for a movie title, with a keyword, and add a rating.
+// limit & skip applied.
+
+exports.getTitleThenRates = (req, res) => {
+    Movie.find({
+            "title": {$regex: req.params.title},
+            "rated": req.params.rated
+            }).limit(limit).skip(skip)
+
+        .then(result => {
+            console.log(`Search query for the title is : ${req.params.title} with a rating of ${req.params.rated}`)
+            res.json(result)
+        })
+        .catch(error => {
+            console.log(`API isn't available. There was an error. Error is message is : ${error.message}`)
+        });
+}
+
+//------------------------------------------------------------------------------------------------------------------//
